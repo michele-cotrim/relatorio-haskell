@@ -1,31 +1,73 @@
----------------------------------------------------------
--- Relatorio.hs
--- Para executar digitar: runghc Relatorio.hs
----------------------------------------------------------
-
 module Relatorio where
+  main:: IO ()
+  main = putStr relatorio
 
-main :: IO()
-main = putStr relatorio
+  tamanho:: Int
+  tamanho=30
 
-tamanho :: Int 
-tamanho = 30
+  relatorio::String
+  relatorio = cabecalho ++ "\n" ++ corpo ++ "\n" ++ rodape ++ "\n"
+ 
+  cabecalho::String
+  cabecalho = imprimirSimbolo tamanho '-' ++ "\n" ++ "Empresa Modelo" ++ "\n" ++ imprimirSimbolo tamanho '-' ++ "\n"
 
-relatorio :: String
-relatorio = cabecalho ++ "\n" ++ corpo ++ "\n" ++ rodape
+  corpo::String
+  corpo = imprimirSimbolo tamanho '-' ++ "\n" ++ "Dados de venda" ++ "\n" ++ imprimirSimbolo tamanho '-' ++ "\n" ++ imprimirSimbolo tamanho '-' ++ "\n"  ++ imprimirSimbolo tamanho '-' ++ "\n" ++ imprimeMeses 12 ++ imprimirSimbolo tamanho '-' ++ "\n"
 
-cabecalho :: String
-cabecalho = (imprimirSimbolo tamanho '-') ++ "\n" ++
-            "Empresa XPTO" ++ "\n" ++
-            (imprimirSimbolo tamanho '-') ++ "\n"
+  vendas :: Int -> Int
+  vendas 1 = 10
+  vendas 2 = 12
+  vendas 3 = 8
+  vendas 4 = 0
+  vendas 5 = 30
+  vendas 6 = 23
+  vendas 7 = 23
+  vendas 8 = 9
+  vendas 9 = 19
+  vendas 10 = 13
+  vendas 11 = 22
+  vendas 12 = 18
 
-corpo = undefined
-rodape = undefined
 
-imprimirSimbolo :: Int -> Char -> String
-imprimirSimbolo 0 ch = ""
-imprimirSimbolo n ch = [ch] ++ imprimirSimbolo (n-1) ch
+  mes :: Int -> String
+  mes 1 = "Janeiro"
+  mes 2 = "Fevereiro"
+  mes 3 = "Marco"
+  mes 4 = "Abril"
+  mes 5 = "Maio"
+  mes 6 = "Junho"
+  mes 7 = "Julho"
+  mes 8 = "Agosto"
+  mes 9 = "Setembro"
+  mes 10 = "Outubro"
+  mes 11 = "Novembro"
+  mes 12 = "Dezembro"
 
+  imprimeMeses :: Int -> String
+  imprimeMeses 1 = imprimeMes 1
+  imprimeMeses n = imprimeMeses (n-1) ++ imprimeMes n
+
+  imprimeMes :: Int -> String
+  imprimeMes n = mes n ++ imprimirSimbolo 15 '.' ++ show(vendas n) ++ "\n"
+
+  rodape::String
+  rodape = imprimirSimbolo tamanho '-' ++ "\n" ++ "Funções do relatório" ++ "\n" ++ imprimirSimbolo tamanho '-' ++ "\n" ++ "\n" ++ imprimirSimbolo tamanho '-' ++ "\n"
+
+
+  maiorVenda:: Int -> Int
+  maiorVenda 1 = vendas 1
+  maiorVenda x 
+    | x >= maiorVenda(x-1) = vendas x
+    | otherwise = maiorVenda(x-1)
+
+  vendaZerada:: Int-> Bool
+  vendaZerada  1 = vendas 1 ==0 
+  vendaZerada x = vendaZerada (x-1)
+    ||vendas x ==0
+
+  imprimirSimbolo :: Int -> Char -> String
+  imprimirSimbolo 0 ch = ""
+  imprimirSimbolo n ch = ch : imprimirSimbolo (n-1) ch
 {-
 corpo :: String
 corpo = imprimeMeses 12
